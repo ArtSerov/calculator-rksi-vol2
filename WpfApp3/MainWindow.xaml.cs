@@ -73,6 +73,9 @@ namespace WpfApp3
                     case "clear":
                         calc.Clear();
                         break;
+                    case "reset":
+                        calc.Reset();
+                        break;
                     case "back":
                         calc.ClearSimbol();
                         break;
@@ -98,7 +101,7 @@ namespace WpfApp3
                         calc.AddOperation(Operation.Interest);
                         break;
                     case "sign":
-                        calc.AddOperation(Operation.Sign);
+                        calc.Sign();
                         break;
                 }
             }

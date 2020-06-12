@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace WpfApp3
 {
-    enum Operation { Add, Div, Sub, Mul, Sqrt, Pow, Tan, Log, Sin, Cos, Interest, Sign }
+    enum Operation { Add, Div, Sub, Mul, Sqrt, Pow, Tan, Log, Sin, Cos, Interest }
 
     delegate void CalculatorDidUpdateOutput(Calculator sender, double value, int precision);
 
@@ -72,12 +72,13 @@ namespace WpfApp3
                 DidUpdateValue.Invoke(this, left.Value, precision);
                 currentOp = op;
             }
-            if (left.HasValue && op == Operation.Sqrt || op == Operation.Cos || op == Operation.Log || op == Operation.Tan || op == Operation.Sin || op == Operation.Sign || op == Operation.Interest)
+            if (left.HasValue && op == Operation.Sqrt || op == Operation.Cos || op == Operation.Log || op == Operation.Tan || op == Operation.Sin || op == Operation.Interest)
             {
                 currentOp = op;
                 ComputeUnar();
                 currentOp = null;
             }
+            currentOp = op;
 
         }
 
@@ -130,14 +131,22 @@ namespace WpfApp3
                 case Operation.Interest:
                     right = (double)right / 100;
                     break;
-
-                case Operation.Sign:
-                    right = right * (-1);
-                    break;
             }
             left = right;
             DidUpdateValue?.Invoke(this, right.Value, precision);
             right = null;
+        }
+        public void Sign()
+        {
+            if (left != null)
+            {
+                left = left * (-1);
+                DidUpdateValue?.Invoke(this, left.Value, precision);
+            }
+            else {
+                right = right * (-1);
+                DidUpdateValue?.Invoke(this, right.Value, precision);
+            }
         }
 
         public void Compute()
@@ -179,16 +188,25 @@ namespace WpfApp3
                     decimalPoint = false;
                     return;
             }
-            left = right;
+            left = null;
+            precision = 0;
+            decimalPoint = false;
+            //left = right;
             DidUpdateValue?.Invoke(this, right.Value, precision);
-            right = null;
-            currentOp = null;
+            //right = null;
+            //currentOp = null;
         }
 
         public void Clear()
         {
+            left = 0;
+            DidUpdateValue?.Invoke(this, left.Value, precision);
+        }
+        public void Reset()
+        {
             right = null;
             left = 0;
+            currentOp = null;
             DidUpdateValue?.Invoke(this, left.Value, precision);
         }
         public void ClearSimbol()
