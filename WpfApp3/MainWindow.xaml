@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp3"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="404">
     <Grid >
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -50,7 +50,7 @@
         <Button Content="2" Margin="2" Grid.Row="6" Grid.Column="1" Click="Button_Click" Style="{DynamicResource bStyle}"/>
         <Button Content="0" Margin="2" Grid.Row="7" Grid.Column="1" Click="Button_Click" Style="{DynamicResource bStyle}"/>
 
-        <Button Content="" Margin="2" Grid.Row="1" Grid.Column="2" Style="{DynamicResource bStyle}"/>
+        <Button x:Name="exit" Content="exit" Margin="2" Grid.Row="1" Grid.Column="2" Style="{DynamicResource bStyle}" Click="Button_Click"/>
         <Button x:Name="reset" Content="C" Margin="2" Grid.Row="2" Grid.Column="2" Style="{DynamicResource bStyle}" Click="Button_Click"/>
         <Button x:Name="inter" Content="%" Margin="2" Grid.Row="3" Grid.Column="2" Style="{DynamicResource bStyle}" Click="Button_Click"/>
         <Button Content="9" Margin="2" Grid.Row="4" Grid.Column="2" Click="Button_Click" Style="{DynamicResource bStyle}"/>

@@ -103,6 +103,9 @@ namespace WpfApp3
                     case "sign":
                         calc.Sign();
                         break;
+                    case "exit":
+                        this.Close();
+                        break;
                 }
             }
         }

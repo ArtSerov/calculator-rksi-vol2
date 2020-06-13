@@ -37,7 +37,13 @@ namespace WpfApp3
             }
             if (!decimalPoint)
             {
-                left = (left ?? 0) * 10 + digit;
+                if (left >= 0 || left==null)
+                {
+                    left = (left ?? 0) * 10 + digit;
+                }
+                else {
+                    left = (left ?? 0) * 10 - digit;
+                }
             }
             else
             {
@@ -86,6 +92,7 @@ namespace WpfApp3
         {
             switch (currentOp)
             {
+                
                 case Operation.Sqrt:
                     if (left < 0)
                     {
@@ -95,7 +102,6 @@ namespace WpfApp3
                     if (left != null)
                         right = Math.Sqrt((double)left);
                     else right = Math.Sqrt((double)right);
-
                     break;
 
                 case Operation.Log:
@@ -107,6 +113,7 @@ namespace WpfApp3
                     if (left != null)
                         right = Math.Log((double)left);
                     else right = Math.Log((double)right);
+
                     break;
 
                 case Operation.Sin:
@@ -188,13 +195,10 @@ namespace WpfApp3
                     decimalPoint = false;
                     return;
             }
-            left = null;
-            precision = 0;
-            decimalPoint = false;
-            //left = right;
+            left = right;
             DidUpdateValue?.Invoke(this, right.Value, precision);
-            //right = null;
-            //currentOp = null;
+            right = null;
+            currentOp = null;
         }
 
         public void Clear()
@@ -204,10 +208,12 @@ namespace WpfApp3
         }
         public void Reset()
         {
-            right = null;
-            left = 0;
             currentOp = null;
-            DidUpdateValue?.Invoke(this, left.Value, precision);
+            left = 0;
+            right = null;
+            precision = 0;
+            decimalPoint = false;
+            DidUpdateValue?.Invoke(this, left.Value, 0);
         }
         public void ClearSimbol()
         {
